@@ -1,15 +1,14 @@
 # dotnet-cqrs-bank-app
 dotnet-cqrs-bank-app
 
-*Dotnet CQRS Bank App
 
 User Story:
-  As a user I would like to:
-    - login/log off to a system
-    - read the balance amount
-    - read the latest 10 transacations history 
-    - send the money transfer to a different account
-    - to be notyfied about incoming transfer on my account
+As a user I would like to:
+  - login/log off to a system
+  - read the balance amount
+  - read the latest 10 transacations history 
+  - send the money transfer to a different account
+  - to be notyfied about incoming transfer on my account
 
 Tech background:
   - Mock Database Objects (shared in memory)
