@@ -4,7 +4,7 @@ dotnet-cqrs-bank-app
 
 ## User Story:
 As a user I would like to:
-  - [ x ] login/log off to a system
+  - [x] login/log off to a system
   - [ ] read the balance amount
   - [ ] read the latest 10 transacations history 
   - [ ] send the money transfer to a different account
@@ -68,8 +68,7 @@ CQRS is a style of application’s architecture which separates the “read” o
 Implementation of a logic responsible for writing is independent of an implementation of a logic responsible for reading.
 All the changes are done in a write model. It generates the events which inform about the changes, then these are consumed by a read model.
 
-**Commands**
-The basics elements of CQRS is `Command` (all necessary actions should be capsulated into a single dedictaed command class). We can follow regular Command Design Pattern principles.
+**Commands**: The basics elements of CQRS is `Command` (all necessary actions should be capsulated into a single dedictaed command class). We can follow regular Command Design Pattern principles.
 ```
 public interface ICommand
 {
@@ -77,8 +76,7 @@ public interface ICommand
 }
 ```
 
-**Handlers**
-Each `Command` must have a `one handler`, not zero, not many - just one in particular.
+**Handlers**: Each `Command` must have a `one handler`, not zero, not many - just one in particular.
 ```
 public interface IHandleCommand<TCommand> : IHandleCommand where TCommand : ICommand
 {
@@ -86,8 +84,7 @@ public interface IHandleCommand<TCommand> : IHandleCommand where TCommand : ICom
 }
 ```
 
-**Command Bus**
-Now we need to manage the Command and Handlers, the best idea would be to introdue a `Command Bus`. First of all to manage, second of all, to creae a Bus for commands.
+**Command Bus**: Now we need to manage the Command and Handlers, the best idea would be to introdue a `Command Bus`. First of all to manage, second of all, to creae a Bus for commands.
 ```
 public class CommandsBus : ICommandsBus
 {
@@ -106,8 +103,7 @@ public class CommandsBus : ICommandsBus
 }
 ```
 
-**Events**
-We can extend CQRS concept by introducing an `Events`, we can use this approach for `EventSourcing`. The main resposnilibity of Events in CQRS is about to `inform rest of a system that **something has happened**`:
+**Events**: We can extend CQRS concept by introducing an `Events`, we can use this approach for `EventSourcing`. The main resposnilibity of Events in CQRS is about to `inform rest of a system that **something has happened**`:
 ```
 public interface IEvent
 {
@@ -151,7 +147,8 @@ public class EventsBus : IEventsBus
 }
 ```
 
-#This is all fine bot how can we use it?
+## Basic CQRS architecture diagram:
+![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/tree/master/cqrs-basic-architecture.PNG)	
 
 
 
