@@ -68,14 +68,99 @@ CQRS is a style of application’s architecture which separates the “read” o
 Implementation of a logic responsible for writing is independent of an implementation of a logic responsible for reading.
 All the changes are done in a write model. It generates the events which inform about the changes, then these are consumed by a read model.
 
+**Commands**
+The basics elements of CQRS is `Command` (all necessary actions should be capsulated into a single dedictaed command class). We can follow regular Command Design Pattern principles.
+```
+public interface ICommand
+{
+  //command
+}
+```
+
+**Handlers**
+Each `Command` must have a `one handler`, not zero, not many - just one in particular.
+```
+public interface IHandleCommand<TCommand> : IHandleCommand where TCommand : ICommand
+{
+  void Handle(TCommand command);
+}
+```
+
+**Command Bus**
+Now we need to manage the Command and Handlers, the best idea would be to introdue a `Command Bus`. First of all to manage, second of all, to creae a Bus for commands.
+```
+public class CommandsBus : ICommandsBus
+{
+  private readonly Func<Type, IHandleCommand> _handlersFactory;
+ 
+  public CommandsBus(Func<Type, IHandleCommand> handlersFactory)
+  {
+	_handlersFactory = handlersFactory;
+  }
+ 
+  public void Send<TCommand>(TCommand command) where TCommand : ICommand
+  {
+	var handler = (IHandleCommand<TCommand>)_handlersFactory(typeof(TCommand));
+	handler.Handle(command);
+  }
+}
+```
+
+**Events**
+We can extend CQRS concept by introducing an `Events`, we can use this approach for `EventSourcing`. The main resposnilibity of Events in CQRS is about to `inform rest of a system that **something has happened**`:
+```
+public interface IEvent
+{
+  //Event 
+}
+
+public interface IHandleEvent
+{
+  //Handler
+}
+
+public interface IHandleEvent<TEvent> : IHandleEvent where TEvent : IEvent
+{
+  void Handle(TEvent @event);
+}
+
+public interface IEventsBus
+{
+  void Publish<TEvent>(TEvent @event) where TEvent : IEvent;
+}
+
+public class EventsBus : IEventsBus
+{
+  private readonly Func<Type, IEnumerable<IHandleEvent>> _handlersFactory;
+ 
+  public EventsBus(Func<Type, IEnumerable<IHandleEvent>> handlersFactory)
+  {
+	_handlersFactory = handlersFactory;
+  }
+ 
+  public void Publish<TEvent>(TEvent @event) where TEvent : IEvent
+  {
+	var handlers = _handlersFactory(typeof(TEvent))
+		.Cast<IHandleEvent<TEvent>>();
+ 
+	foreach (var handler in handlers)
+	{
+		handler.Handle(@event);
+	}
+  }
+}
+```
+
+#This is all fine bot how can we use it?
 
 
-# Summarizing CQS and CQRS:
+
+# Summarizing CQS, CQRS and CQRS Event Store:
 
 | CQS  | CQRS | CQRS Event Store |
 | ------------- | ------------- | ------------- |
-| Command [ **Create, Update, Delete** ] Does something, Modifies state, Should not return value | CQRS 1D: Commands use domain, Queries use database, Simple to implement | **Pros**: Scalability, Flexibility, Event Sourcing |
-| Query [ **Read** ] Answers a question, Does not modify state, Should return value | CQRS 2DB: Queries use read database, Eventual consistency, Can be faster, Better scalability, Commands use write database | **Cons**: More complex than other patterns,Does not modify state, Event Sourcing costs |
+| Command [ **Create, Update, Delete** ] Does something, Modifies state, Should not return value | **CQRS 1D**: Commands use domain, Queries use database, Simple to implement | **Pros**: Scalability, Flexibility, Event Sourcing |
+| Query [ **Read** ] Answers a question, Does not modify state, Should return value | **CQRS 2DB**: Queries use read database, Eventual consistency, Can be faster, Better scalability, Commands use write database | **Cons**: More complex than other patterns,Does not modify state, Event Sourcing costs |
 
 
   
