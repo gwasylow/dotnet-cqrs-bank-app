@@ -148,7 +148,7 @@ public class EventsBus : IEventsBus
 ```
 
 ## Basic CQRS architecture diagram:
-![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/tree/master/cqrs-basic-architecture.PNG)	
+![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/blob/master/Images/cqrs-basic-architecture.PNG)	
 
 
 
