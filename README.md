@@ -4,11 +4,11 @@ dotnet-cqrs-bank-app
 
 ## User Story:
 As a user I would like to:
-  [x] login/log off to a system
-  [] read the balance amount
-  [] read the latest 10 transacations history 
-  [] send the money transfer to a different account
-  [] to be notyfied about incoming transfer on my account
+  - [ x ] login/log off to a system
+  - [ ] read the balance amount
+  - [ ] read the latest 10 transacations history 
+  - [ ] send the money transfer to a different account
+  - [ ] to be notyfied about incoming transfer on my account
 
 ## Tech background:
   - Mock Database Objects (shared in memory)
@@ -74,8 +74,22 @@ All the changes are done in a write model. It generates the events which inform 
 
 | CQS  | CQRS |
 | ------------- | ------------- |
-| Command [ Create, Update, Delete ] Does something, Modifies state, Should not return value | CQRS 1DB - Commands use domain, Queries use database, Simple to implement |
-|Query [ Read ] Answers a question, Does not modify state, Should return valu  | CQRS 2DB - Queries use read database, Eventual consistency, Can be faster, Better scalability, Commands use write database |
+| Command [ **Create, Update, Delete** ] 
+ - Does something
+ - Modifies state
+ - Should not return value | CQRS 1DB
+ - Commands use domain
+ - Queries use database
+ - Simple to implement |
+|Query [ **Read** ] 
+ - Answers a question
+ - Does not modify state
+ - Should return valu  | CQRS 2DB
+ - Queries use read database 
+ -  Eventual consistency
+ - Can be faster
+ - Better scalability
+ - Commands use write database |
 
 
   
