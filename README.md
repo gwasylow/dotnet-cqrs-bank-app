@@ -72,24 +72,10 @@ All the changes are done in a write model. It generates the events which inform 
 
 # Summarizing CQS and CQRS:
 
-| CQS  | CQRS |
-| ------------- | ------------- |
-| Command [ **Create, Update, Delete** ] 
- - Does something
- - Modifies state
- - Should not return value | CQRS 1DB
- - Commands use domain
- - Queries use database
- - Simple to implement |
-|Query [ **Read** ] 
- - Answers a question
- - Does not modify state
- - Should return valu  | CQRS 2DB
- - Queries use read database 
- -  Eventual consistency
- - Can be faster
- - Better scalability
- - Commands use write database |
+| CQS  | CQRS | CQRS Event Store |
+| ------------- | ------------- | ------------- |
+| Command [ **Create, Update, Delete** ] Does something, Modifies state, Should not return value | CQRS 1D: Commands use domain, Queries use database, Simple to implement | **Pros**: Scalability, Flexibility, Event Sourcing |
+| Query [ **Read** ] Answers a question, Does not modify state, Should return value | CQRS 2DB: Queries use read database, Eventual consistency, Can be faster, Better scalability, Commands use write database | **Cons**: More complex than other patterns,Does not modify state, Event Sourcing costs |
 
 
   
