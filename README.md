@@ -18,6 +18,7 @@ As a user I would like to:
   - Event Storming method
   - DDD (Domain Driven Development - if applicable)
   - TDD (if applicable)
+  - Usage of DAPPER/EF Core
   - Simple xHTML/Razor/CSS Forms (bootstrap if applicable)
   - GitHub (CI/CD if applicable)
   - User Manual/Documentation on GitHub
@@ -147,17 +148,38 @@ public class EventsBus : IEventsBus
 }
 ```
 
+**CQRS Segregations:**
+![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/blob/master/Images/cqrs-segregation.PNG)	
+
+With Persistance:
+![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/blob/master/Images/cqrs-segregation-persistance.PNG)	
+
+With Event-Store:
+![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/blob/master/Images/cqrs-segregation-event-store.PNG)	
+
+With Segregation scalability:
+![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/blob/master/Images/cqrs-segregation-scalability.PNG )	
+
+
+
 ## Basic CQRS architecture diagram:
 ![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/blob/master/Images/cqrs-basic-architecture.PNG)	
 
 
-
 # Summarizing CQS, CQRS and CQRS Event Store:
+Moving from typical layered pattern to Command/Query has several advantages:
+ - Single Responsibility Principle – one class which handles a request as a responsibility
+ - Clearly defined target and dependencies injection,
+ - Avoidance of mixing code which modifies data (separation between commands and queries)
+ - Less effort in maintenance and improved refactoring topion
+ - Quick way to have a full trace log on state change in application
+ - Relative easy way of writing Unit Tests
+
 
 | CQS  | CQRS | CQRS Event Store |
 | ------------- | ------------- | ------------- |
-| Command [ **Create, Update, Delete** ] Does something, Modifies state, Should not return value | **CQRS 1D**: Commands use domain, Queries use database, Simple to implement | **Pros**: Scalability, Flexibility, Event Sourcing |
-| Query [ **Read** ] Answers a question, Does not modify state, Should return value | **CQRS 2DB**: Queries use read database, Eventual consistency, Can be faster, Better scalability, Commands use write database | **Cons**: More complex than other patterns,Does not modify state, Event Sourcing costs |
+| **Command** [ **Create, Update, Delete** ] Does something, Modifies state, Should not return value | **CQRS 1DB (Read/Write)**: Commands use domain, Queries use database, Simple to implement | **Pros**: Scalability, Flexibility, Event Sourcing |
+| **Query** [ **Read** ] Answers a question, Does not modify state, Should return value | **CQRS 2DB (DB: Read, DB: Write)**: Queries use read database, Eventual consistency, Can be faster, Better scalability, Commands use write database | **Cons**: More complex than other patterns,Does not modify state, Event Sourcing costs |
 
 
   
