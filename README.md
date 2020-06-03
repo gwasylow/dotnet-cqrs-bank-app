@@ -69,6 +69,9 @@ CQRS is a style of application’s architecture which separates the “read” o
 Implementation of a logic responsible for writing is independent of an implementation of a logic responsible for reading.
 All the changes are done in a write model. It generates the events which inform about the changes, then these are consumed by a read model.
 
+## Basic CQRS architecture diagram:
+![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/blob/master/Images/cqrs-basic-architecture.PNG)	
+
 **Commands**: The basics elements of CQRS is `Command` (all necessary actions should be capsulated into a single dedictaed command class). We can follow regular Command Design Pattern principles.
 ```
 public interface ICommand
@@ -148,22 +151,18 @@ public class EventsBus : IEventsBus
 }
 ```
 
-**CQRS Segregations:**
+## CQRS Segregations:
 ![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/blob/master/Images/cqrs-segregation.PNG)	
 
-With Persistance:
+## With Persistance:
 ![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/blob/master/Images/cqrs-segregation-persistance.PNG)	
 
-With Event-Store:
+## With Event-Store:
 ![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/blob/master/Images/cqrs-segregation-event-store.PNG)	
 
-With Segregation scalability:
-![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/blob/master/Images/cqrs-segregation-scalability.PNG )	
+## With Segregation scalability:
+![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/blob/master/Images/cqrs-segregation-scalability.PNG)	
 
-
-
-## Basic CQRS architecture diagram:
-![alt text](https://github.com/gwasylow/dotnet-cqrs-bank-app/blob/master/Images/cqrs-basic-architecture.PNG)	
 
 
 # Summarizing CQS, CQRS and CQRS Event Store:
