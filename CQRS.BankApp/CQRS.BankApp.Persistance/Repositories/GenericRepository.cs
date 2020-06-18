@@ -6,8 +6,7 @@ using System.Text;
 
 namespace CQRS.BankApp.Persistance.Repositories
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity>
-        where TEntity : class, IMockEntity
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IMockEntity
     {
         private readonly MockDataContext _mockContext;
 
@@ -16,18 +15,17 @@ namespace CQRS.BankApp.Persistance.Repositories
             _mockContext = new MockDataContext();
         }
 
-        public virtual IQueryable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll()
         {
+
             if (typeof(TEntity) == typeof(TblBankAccounts))
-                return _mockContext.BankAccounts as IQueryable<TEntity>;
-
-            if (typeof(TEntity) == typeof(TblLogins))
-                return _mockContext.Logins as IQueryable<TEntity>;
-
-            if (typeof(TEntity) == typeof(TblNotifications))
-                return _mockContext.Notifications as IQueryable<TEntity>;
-
-            throw new NotSupportedException("Not supported type. TEntity not found.");
+                return _mockContext.BankAccounts as IEnumerable<TEntity>;
+            else if (typeof(TEntity) == typeof(TblLogins))
+                return _mockContext.Logins as IEnumerable<TEntity>;
+            else if (typeof(TEntity) == typeof(TblNotifications))
+                return _mockContext.Notifications as IEnumerable<TEntity>;
+            else
+                throw new NotSupportedException("Not supported type. TEntity not found.");
         }
 
         public virtual TEntity GetById(int id)
@@ -38,12 +36,11 @@ namespace CQRS.BankApp.Persistance.Repositories
         public virtual void Create(TEntity entity)
         {
             if (typeof(TEntity) == typeof(TblNotifications))
-               (_mockContext.Notifications as List<TblNotifications>).Add(entity as TblNotifications);
-
-            if (typeof(TEntity) == typeof(TblBankAccounts))
+                (_mockContext.Notifications as List<TblNotifications>).Add(entity as TblNotifications);
+            else if (typeof(TEntity) == typeof(TblBankAccounts))
                 (_mockContext.BankAccounts as List<TblBankAccounts>).Add(entity as TblBankAccounts);
-
-            throw new InvalidCastException("Unable to cast while creating.");
+            else
+                throw new InvalidCastException("Unable to cast while creating.");
         }
 
         public virtual void Update(TEntity entity)
@@ -54,9 +51,10 @@ namespace CQRS.BankApp.Persistance.Repositories
             {
                 if (typeof(TEntity) == typeof(TblBankAccounts))
                     _mockContext.BankAccounts.ToList().Remove(entityToUpdate as TblBankAccounts);
-
-                if (typeof(TEntity) == typeof(TblNotifications))
+                else if (typeof(TEntity) == typeof(TblNotifications))
                     _mockContext.Notifications.ToList().Remove(entityToUpdate as TblNotifications);
+                else
+                    throw new InvalidCastException("Unable to cast while creating.");
 
                 Create(entity);
             }

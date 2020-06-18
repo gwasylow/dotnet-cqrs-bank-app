@@ -8,9 +8,9 @@ namespace CQRS.BankApp.Persistance
 {
     public class MockDataContext : IDisposable
     {
-        public IQueryable<TblLogins> Logins { set; get; }
-        public IQueryable<TblBankAccounts> BankAccounts { set; get; }
-        public IQueryable<TblNotifications> Notifications { set; get; }
+        public IEnumerable<TblLogins> Logins { set; get; }
+        public IEnumerable<TblBankAccounts> BankAccounts { set; get; }
+        public IEnumerable<TblNotifications> Notifications { set; get; }
 
         public MockDataContext()
         {
@@ -65,7 +65,6 @@ namespace CQRS.BankApp.Persistance
 
         public void Dispose()
         {
-            throw new NotImplementedException();
         }
     }
 }

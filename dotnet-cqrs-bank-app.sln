@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CQRS.BankApp.Persistance", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CQRS.BankApp.WebUI", "CQRS.BankApp\CQRS.BankApp.WebUI\CQRS.BankApp.WebUI.csproj", "{B58BEF3C-5CB1-4690-B018-76BBF8205F94}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CQRS.BankApp.Tests", "CQRS.BankApp\CQRS.BankApp.Tests\CQRS.BankApp.Tests.csproj", "{D2554C0F-86C2-4194-9481-BDDCA6D02CFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQRS.BankApp.Core", "CQRS.BankApp\CQRS.BankApp.Core\CQRS.BankApp.Core.csproj", "{F8BE6E47-78C0-4709-8AC2-3B353D3CBAED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{B58BEF3C-5CB1-4690-B018-76BBF8205F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B58BEF3C-5CB1-4690-B018-76BBF8205F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B58BEF3C-5CB1-4690-B018-76BBF8205F94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2554C0F-86C2-4194-9481-BDDCA6D02CFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2554C0F-86C2-4194-9481-BDDCA6D02CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2554C0F-86C2-4194-9481-BDDCA6D02CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2554C0F-86C2-4194-9481-BDDCA6D02CFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8BE6E47-78C0-4709-8AC2-3B353D3CBAED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8BE6E47-78C0-4709-8AC2-3B353D3CBAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8BE6E47-78C0-4709-8AC2-3B353D3CBAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8BE6E47-78C0-4709-8AC2-3B353D3CBAED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
