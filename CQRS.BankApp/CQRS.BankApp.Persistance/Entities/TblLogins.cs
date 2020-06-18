@@ -10,5 +10,6 @@ namespace CQRS.BankApp.Persistance.Entities
         public string Login { get; set; }
         public string Password => "demo";
         public virtual List<TblBankAccounts> BankAccounts { get; set; }
+        public virtual List<TblBankAccounts> PreDefinedAccounts { get; set; }
     }
 }

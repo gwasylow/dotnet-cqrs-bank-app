@@ -12,11 +12,6 @@ namespace CQRS.BankApp.Tests.Persistance
     [TestClass]
     public class GenericRepositoryTests
     {
-        //void Create(TEntity entity);
-        //IEnumerable<TEntity> GetAll();
-        //TEntity GetById(int id);
-        //void Update(TEntity entity);
-
         private TblBankAccounts _bankAccount;
         private GenericRepository<TblBankAccounts> _bankAccountsRepository;
 
@@ -41,11 +36,14 @@ namespace CQRS.BankApp.Tests.Persistance
         [TestMethod]
         public void CreateShouldAddNewEntity()
         {
-            var actualBankAccountCounter = _bankAccountsRepository.GetAll().ToList().Count;
+            var bankAccountCounter = _bankAccountsRepository.GetAll().ToList().Count;
             _bankAccountsRepository.Create(_bankAccount);
-            var expectedBankAccountCounter = _bankAccountsRepository.GetAll().ToList().Count;
+            var actualBankAccountCounter = _bankAccountsRepository.GetAll().ToList().Count;
 
-            Assert.AreEqual(actualBankAccountCounter+1, expectedBankAccountCounter);
+            var expectedBankAccountCounter = bankAccountCounter + 1;
+
+
+            Assert.AreEqual(expectedBankAccountCounter, actualBankAccountCounter);
 
         }
 
@@ -67,23 +65,6 @@ namespace CQRS.BankApp.Tests.Persistance
             Assert.AreEqual(actualBalance, expectedBalance);
         }
 
-        [TestMethod]
-        public void UpdteShouldModifyEntity()
-        {
-            var entity = _bankAccountsRepository.GetById(1);
-            var oldBalance = entity.Balance;
-            entity.Balance += 100;
-
-            _bankAccountsRepository.Update(entity);
-
-
-            var updatedEntity = _bankAccountsRepository.GetById(1);
-
-            var actualBalance = updatedEntity.Balance;
-            var expectedBalance = oldBalance + 100;
-
-            Assert.AreEqual(actualBalance, expectedBalance);
-        }
 
     }
 }

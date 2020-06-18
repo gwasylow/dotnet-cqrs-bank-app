@@ -35,5 +35,18 @@ namespace CQRS.BankApp.Tests.Persistance
             }
         }
 
+        [TestMethod]
+        public void UserShouldHavePreDefinedAccount()
+        {
+            using (var context = new MockDataContext())
+            {
+                var grazynkaPredefinedAccounts = context.Logins.FirstOrDefault(x => x.Login == "grazynka".ToUpper()).PreDefinedAccounts;
+                var grazynkaValidationPredefinedAccount = grazynkaPredefinedAccounts.Where(x => x.Login.Login == "janusz".ToUpper()).Any();
+
+                Assert.IsTrue(grazynkaValidationPredefinedAccount);
+
+            }
+
+        }
     }
 }

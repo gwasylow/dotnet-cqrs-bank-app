@@ -26,13 +26,15 @@ namespace CQRS.BankApp.Persistance
                 {
                     Id= 1,
                     BankAccounts = null,
-                    Login = "grazynka".ToUpper()
+                    Login = "grazynka".ToUpper(),
+                    PreDefinedAccounts = new List<TblBankAccounts>()
                 },
                 new TblLogins
                 {
                     Id= 2,
                     BankAccounts = null,
-                    Login = "janusz".ToUpper()
+                    Login = "janusz".ToUpper(),
+                    PreDefinedAccounts = new List<TblBankAccounts>()
                 }
             };
 
@@ -60,6 +62,16 @@ namespace CQRS.BankApp.Persistance
                     Login = Logins.FirstOrDefault(x=>x.Login == "janusz".ToUpper())
                 }
             };
+
+            Logins.FirstOrDefault(x => x.Login == "grazynka".ToUpper()).PreDefinedAccounts.Add(
+               BankAccounts.FirstOrDefault(x => x.Id == 3)
+                );
+
+            Logins.FirstOrDefault(x => x.Login == "janusz".ToUpper()).PreDefinedAccounts.Add(
+               BankAccounts.FirstOrDefault(x => x.Id == 2)
+                );
+
+
             Notifications = new List<TblNotifications>();
         }
 
