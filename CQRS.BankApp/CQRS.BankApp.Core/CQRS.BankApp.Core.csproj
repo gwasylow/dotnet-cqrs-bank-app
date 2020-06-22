@@ -12,12 +12,15 @@
 
   <ItemGroup>
     <Folder Include="Domains\AccountDomain\" />
-    <Folder Include="Domains\" />
-    <Folder Include="Domains\UserDomain\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CQRS.BankApp.Persistance\CQRS.BankApp.Persistance.csproj" />
   </ItemGroup>
 
 </Project>

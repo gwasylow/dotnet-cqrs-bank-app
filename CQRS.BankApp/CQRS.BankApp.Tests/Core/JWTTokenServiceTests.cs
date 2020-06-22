@@ -31,5 +31,7 @@ namespace CQRS.BankApp.Tests.Core
 
             Assert.IsTrue(!string.IsNullOrWhiteSpace(token));
         }
+
+
     }
 }

@@ -23,6 +23,7 @@ namespace CQRS.BankApp.Core.Services
             );
 
             var encodeToken = new JwtSecurityTokenHandler().WriteToken(token);
+
             return encodeToken;
         }
     }
