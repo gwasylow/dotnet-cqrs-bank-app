@@ -2,6 +2,7 @@
 using CQRS.BankApp.Core;
 using CQRS.BankApp.Core.CQRS;
 using CQRS.BankApp.Core.Domains.UserDomain;
+using CQRS.BankApp.Core.Domains.UserDomain.Queries;
 using CQRS.BankApp.Core.Models;
 using CQRS.BankApp.Persistance.Entities;
 using CQRS.BankApp.Persistance.Repositories;
@@ -13,7 +14,8 @@ namespace CQRS.BankApp.Tests.Core
     public class CQRSTests
     {
         private IContainer _container;
-        private LoginModel _loginModel;
+        private LoginQuery _loginModel;
+        private LoginQuery _wrongLoginModel;
 
         [TestInitialize]
         public void Init()
@@ -27,18 +29,30 @@ namespace CQRS.BankApp.Tests.Core
             _container = builder.Build();
 
             //Init user login model
-            _loginModel = new LoginModel
+            _loginModel = new LoginQuery
             {
                 Login = "grazynka".ToUpper(),
                 Password = "demo"
+            };
+
+            _wrongLoginModel = new LoginQuery
+            {
+                Login = "grazynka".ToUpper(),
+                Password = "demo1"
             };
         }
 
         [TestMethod]
         public void QueryHandlerShouldBeAbleToAuthenticateUser()
         {
-            var handler = _container.Resolve<IHandleQuery<LoginModel, JWTModel>>().Handle(_loginModel);
+            var handler = _container.Resolve<IHandleQuery<LoginQuery, JWTModel>>().Handle(_loginModel);
                Assert.IsTrue(!string.IsNullOrWhiteSpace(handler.Token) && handler.UserId>0);
+        }
+        [TestMethod]
+        public void QueryHandlerShouldBeAbleToDetectNotAuthenticatedUser()
+        {
+            var handler = _container.Resolve<IHandleQuery<LoginQuery, JWTModel>>().Handle(_wrongLoginModel);
+            Assert.IsTrue(string.IsNullOrWhiteSpace(handler.Token) || handler.UserId > 0);
         }
 
 

@@ -1,4 +1,6 @@
-﻿using CQRS.BankApp.Core.Models;
+﻿using CQRS.BankApp.Core.CQRS;
+using CQRS.BankApp.Core.Domains.UserDomain.Queries;
+using CQRS.BankApp.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRS.BankApp.Api.Controllers
@@ -7,10 +9,16 @@ namespace CQRS.BankApp.Api.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        [HttpPost]
-        public IActionResult GetUser([FromBody] UserModel user)
+        private readonly IQueryBus _queryBus;
+
+        public UserController(IQueryBus queryBus)
         {
-            return Ok();
+            _queryBus = queryBus;
+        }
+        [HttpPost]
+        public IActionResult GetUserDetails([FromBody] GetUserDetailsQuery user)
+        {
+            return Ok(_queryBus.Send<GetUserDetailsQuery,UserDetailsModel>(user));
         }
     }
 }

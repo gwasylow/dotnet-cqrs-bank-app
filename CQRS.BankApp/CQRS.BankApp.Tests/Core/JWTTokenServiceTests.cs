@@ -1,4 +1,4 @@
-﻿using CQRS.BankApp.Core.Models;
+﻿using CQRS.BankApp.Core.Domains.UserDomain.Queries;
 using CQRS.BankApp.Core.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -11,13 +11,13 @@ namespace CQRS.BankApp.Tests.Core
     public class JWTTokenServiceTest
     {
         private JWTTokenService _JWTTokenService;
-        private LoginModel _login;
+        private LoginQuery _login;
 
         [TestInitialize]
         public void Init()
         {
             _JWTTokenService = new JWTTokenService();
-            _login = new LoginModel
+            _login = new LoginQuery
             {
                 Login = "grazynka",
                 Password = "grazynka"

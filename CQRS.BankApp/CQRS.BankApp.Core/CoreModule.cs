@@ -20,8 +20,7 @@ namespace CQRS.BankApp.Core
             //Persistance assembly
             var assembly = typeof(MockDataContext).Assembly;
 
-            builder.RegisterGeneric(typeof(GenericRepository<>)).AsSelf();
-
+            builder.RegisterGeneric(typeof(GenericRepository<>)).SingleInstance().AsSelf();
         }
     }
 }

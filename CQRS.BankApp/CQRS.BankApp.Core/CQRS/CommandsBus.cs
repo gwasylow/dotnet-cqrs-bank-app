@@ -6,7 +6,6 @@ namespace CQRS.BankApp.Core.CQRS
     {
         private readonly Func<Type, IHandleCommand> _handlersFactory;
         public CommandsBus(Func<Type, IHandleCommand> handlersFactory)
-
         {
             _handlersFactory = handlersFactory;
         }

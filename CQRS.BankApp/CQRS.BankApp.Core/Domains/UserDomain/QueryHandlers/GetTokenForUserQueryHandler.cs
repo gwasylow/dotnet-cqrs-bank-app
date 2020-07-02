@@ -4,10 +4,11 @@ using CQRS.BankApp.Core.Services;
 using CQRS.BankApp.Persistance.Entities;
 using System.Linq;
 using CQRS.BankApp.Persistance.Repositories;
+using CQRS.BankApp.Core.Domains.UserDomain.Queries;
 
-namespace CQRS.BankApp.Core.Domains.UserDomain
+namespace CQRS.BankApp.Core.Domains.UserDomain.QueryHandlers
 {
-    public class GetTokenForUserQueryHanlder : IHandleQuery<LoginModel, JWTModel>
+    public class GetTokenForUserQueryHanlder : IHandleQuery<LoginQuery, JWTModel>
     {
         private readonly JWTTokenService _tokenService;
         private readonly GenericRepository<TblLogins> _loginsRepository;
@@ -17,7 +18,7 @@ namespace CQRS.BankApp.Core.Domains.UserDomain
             _tokenService = tokenService;
             _loginsRepository = loginsRepository;
         }
-        public JWTModel Handle(LoginModel query)
+        public JWTModel Handle(LoginQuery query)
         {
             var userAuthDetails = _loginsRepository.GetAll().FirstOrDefault(x => x.Login == query.Login && x.Password == query.Password);
 

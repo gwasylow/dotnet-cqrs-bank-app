@@ -1,4 +1,4 @@
-﻿using CQRS.BankApp.Core.Models;
+﻿using CQRS.BankApp.Core.Domains.UserDomain.Queries;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace CQRS.BankApp.Core.Services
 {
     public class JWTTokenService
     {
-        public string GenerateJWT(LoginModel login)
+        public string GenerateJWT(LoginQuery login)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("TopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKey"));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

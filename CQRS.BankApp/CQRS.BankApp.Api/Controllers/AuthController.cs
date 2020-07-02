@@ -1,4 +1,6 @@
-﻿using CQRS.BankApp.Core.Models;
+﻿using CQRS.BankApp.Core.Domains.UserDomain.Queries;
+using CQRS.BankApp.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRS.BankApp.Api.Controllers
@@ -8,7 +10,8 @@ namespace CQRS.BankApp.Api.Controllers
     public class AuthController : ControllerBase
     {
         [HttpPost]
-        public IActionResult Login([FromBody] LoginModel login)
+        [AllowAnonymous]
+        public IActionResult Login([FromBody] LoginQuery login)
         {
             //Generate token command
             var token = new JWTModel();
@@ -19,10 +22,10 @@ namespace CQRS.BankApp.Api.Controllers
             return Ok(token);
         }
 
-        [HttpGet]
-        public IActionResult Logout()
-        {
-            return Ok();
-        }
+        //[HttpGet]
+        //public IActionResult Logout()
+        //{
+        //    return Ok();
+        //}
     }
 }

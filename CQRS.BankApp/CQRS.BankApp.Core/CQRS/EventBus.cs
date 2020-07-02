@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace CQRS.BankApp.Core.CQRS
 {
-    internal class EventsBus : IEventsBus
+    public class EventsBus : IEventsBus
     {
         private readonly Func<Type, IEnumerable<IHandleEvent>> _handlersFactory;
         public EventsBus(Func<Type, IEnumerable<IHandleEvent>> handlersFactory)

@@ -1,7 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using CQRS.BankApp.Core;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CQRS.BankApp.Api
 {
@@ -26,6 +32,17 @@ namespace CQRS.BankApp.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            //services.AddAutofac();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt => {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("TopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKey"))
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +63,16 @@ namespace CQRS.BankApp.Api
             {
                 endpoints.MapControllers();
             });
+
         }
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            //Initialize Autofac container instance
+            var assembly = typeof(ICoreAssemblyMarker).Assembly;
+
+            //Initialize all autofac modules in assembly
+            builder.RegisterAssemblyModules(assembly);
+        }
+
     }
 }

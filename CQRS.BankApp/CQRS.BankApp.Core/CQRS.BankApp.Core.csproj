@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domains\AccountDomain\" />
+    <Folder Include="Domains\UserDomain\CommandHandlers\" />
   </ItemGroup>
 
   <ItemGroup>

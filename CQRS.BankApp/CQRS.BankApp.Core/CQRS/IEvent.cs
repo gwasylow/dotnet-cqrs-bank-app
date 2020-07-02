@@ -1,6 +1,9 @@
-﻿namespace CQRS.BankApp.Core.CQRS
+﻿using System;
+
+namespace CQRS.BankApp.Core.CQRS
 {
-    internal interface IEvent
+    public interface IEvent
     {
+        DateTime OccurredOn { get; }
     }
 }
