@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using CQRS.BankApp.Api.Middleware;
 using CQRS.BankApp.Core;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -37,9 +38,12 @@ namespace CQRS.BankApp.Api
                 .AddJwtBearer(opt => {
                     opt.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = false,
+                        ValidateIssuerSigningKey = false,
+                        ValidIssuer = "issuer",
+                        ValidAudience = "audience",
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("TopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKey"))
                     };
                 });
@@ -53,9 +57,13 @@ namespace CQRS.BankApp.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware<TokenBlackListCheckMiddleware>();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
@@ -69,7 +77,7 @@ namespace CQRS.BankApp.Api
         {
             //Initialize Autofac container instance
             var assembly = typeof(ICoreAssemblyMarker).Assembly;
-
+            builder.RegisterType<TokenBlackListCheckMiddleware>();
             //Initialize all autofac modules in assembly
             builder.RegisterAssemblyModules(assembly);
         }

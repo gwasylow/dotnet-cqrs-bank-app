@@ -20,7 +20,7 @@ namespace CQRS.BankApp.Core.Domains.UserDomain.QueryHandlers
         }
         public JWTModel Handle(LoginQuery query)
         {
-            var userAuthDetails = _loginsRepository.GetAll().FirstOrDefault(x => x.Login == query.Login && x.Password == query.Password);
+            var userAuthDetails = _loginsRepository.GetAll().FirstOrDefault(x => x.Login == query.Login.ToUpper() && x.Password == query.Password);
 
             if (userAuthDetails != null)
             {

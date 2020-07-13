@@ -1,17 +1,18 @@
 ﻿using Autofac;
 using CQRS.BankApp.Core;
 using CQRS.BankApp.Core.CQRS;
-using CQRS.BankApp.Core.Domains.UserDomain;
+using CQRS.BankApp.Core.Domains.UserDomain.Commands;
 using CQRS.BankApp.Core.Domains.UserDomain.Queries;
 using CQRS.BankApp.Core.Models;
 using CQRS.BankApp.Persistance.Entities;
 using CQRS.BankApp.Persistance.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace CQRS.BankApp.Tests.Core
 {
     [TestClass]
-    public class CQRSTests
+    public class AuthTests
     {
         private IContainer _container;
         private LoginQuery _loginModel;
@@ -55,7 +56,27 @@ namespace CQRS.BankApp.Tests.Core
             Assert.IsTrue(string.IsNullOrWhiteSpace(handler.Token) || handler.UserId > 0);
         }
 
+        [TestMethod]
+        public void RegisterUserToTheBlackList()
+        {
+            var token = _container.Resolve<IHandleQuery<LoginQuery, JWTModel>>().Handle(_loginModel);
+
+            if (string.IsNullOrWhiteSpace(token.Token))
+                Assert.Fail("User with correct credentials is not able to login");
+
+            var userLogoutCommand = new UserLogoutCommand 
+            { 
+                Key = token.Token, 
+                UserId = token.UserId 
+            };
+
+            _container.Resolve<IHandleCommand<UserLogoutCommand>>().Handle(userLogoutCommand);
 
 
+            var isTokenBlacklisted = _container.Resolve<GenericRepository<TblInvalidKeys>>().GetAll().Where(x=>x.Key == token.Token).Any();
+
+            Assert.IsTrue(isTokenBlacklisted);
+
+        }
     }
 }

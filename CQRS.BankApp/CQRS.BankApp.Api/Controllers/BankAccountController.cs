@@ -2,6 +2,8 @@
 using CQRS.BankApp.Core.Domains.AccountDomain.Commands;
 using CQRS.BankApp.Core.Domains.AccountDomain.Queries;
 using CQRS.BankApp.Core.Models;
+using CQRS.BankApp.Core.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -20,7 +22,8 @@ namespace CQRS.BankApp.Api.Controllers
             _queryBus = queryBus;
         }
 
-        [HttpGet("{userId}")]
+        [HttpPost("GetAccountsForUser/{userId}")]
+        [Authorize(Roles = Consts.UserRole)]
         public IActionResult GetAccountsForUser(int userId)
         {
             var accounts = _queryBus.Send<GetAccountForUserIdQuery, IEnumerable<BankAccountModel>>(
@@ -32,8 +35,8 @@ namespace CQRS.BankApp.Api.Controllers
             return Ok(accounts);
         }
 
-        [HttpPost]
-        public IActionResult TransferMoney([FromBody] MoneyTransferCommand moneyTransfer)
+        [HttpPost("TransferMoney")]
+        public IActionResult TransferMoney(MoneyTransferCommand moneyTransfer)
         {
             _commandBus.Send(moneyTransfer);
             return Ok();

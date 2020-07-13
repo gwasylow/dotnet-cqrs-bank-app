@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CQRS.BankApp.Tests.Core
 {
     [TestClass]
-    public class MoneyTransferCommandHandlerTests
+    public class MoneyTransferTests
     {
         private IContainer _container;
         private MoneyTransferCommand _moneyTransfer;

@@ -1,4 +1,5 @@
 ﻿using CQRS.BankApp.Core.Domains.UserDomain.Queries;
+using CQRS.BankApp.Core.Utils;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,16 @@ namespace CQRS.BankApp.Core.Services
     {
         public string GenerateJWT(LoginQuery login)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("TopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKey"));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Consts.JWTKEY));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken
             (
-            issuer: login.Login,
-            expires: DateTime.UtcNow.AddMinutes(60),
-            signingCredentials: credentials
+                issuer: "issuer",
+                audience: "audience",
+                expires: DateTime.UtcNow.AddMinutes(60),
+                claims: new List<Claim> { new Claim(ClaimTypes.Role, Consts.UserRole) },
+                signingCredentials: credentials
             );
 
             var encodeToken = new JwtSecurityTokenHandler().WriteToken(token);

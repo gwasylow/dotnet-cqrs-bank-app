@@ -11,6 +11,7 @@ namespace CQRS.BankApp.Persistance
         public IEnumerable<TblLogins> Logins { set; get; }
         public IEnumerable<TblBankAccounts> BankAccounts { set; get; }
         public IEnumerable<TblNotifications> Notifications { set; get; }
+        public IEnumerable<TblInvalidKeys> InvalidKeys { set; get; }
 
         public MockDataContext()
         {
@@ -73,6 +74,7 @@ namespace CQRS.BankApp.Persistance
 
 
             Notifications = new List<TblNotifications>();
+            InvalidKeys = new List<TblInvalidKeys>();
         }
 
         public void Dispose()

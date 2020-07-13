@@ -14,10 +14,9 @@ namespace CQRS.BankApp.Core.CQRS
 
         public void Publish<TEvent>(TEvent @event) where TEvent : IEvent
         {
-            var handlers = _handlersFactory(typeof(TEvent))
-                .Cast<IHandleEvent<TEvent>>();
-
-            foreach (var handler in handlers)
+            
+            var handlers = _handlersFactory(typeof(TEvent));
+            foreach (IHandleEvent<TEvent> handler in handlers)
             {
                 handler.Handle(@event);
             }

@@ -6,8 +6,8 @@ namespace CQRS.BankApp.Core.Domains.AccountDomain.Events
     {
         public void Handle(MoneyTransferedEvent @event)
         {
-
-            //Notify
+            //TODO: jwt middleware check blacklist
+            
         }
     }
 }
