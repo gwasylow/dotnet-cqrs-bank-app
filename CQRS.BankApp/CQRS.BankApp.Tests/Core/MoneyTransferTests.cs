@@ -36,12 +36,12 @@ namespace CQRS.BankApp.Tests.Core
 
             _firstBankAccount = new GetAccountQueryById
             {
-                Id = 1
+                AccountId = 1
             };
 
             _secondBankAccount = new GetAccountQueryById
             {
-                Id = 2
+                AccountId = 2
             };
         }
 

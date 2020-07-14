@@ -7,6 +7,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using CQRS.BankApp.Api.Middleware;
 using CQRS.BankApp.Core;
+using CQRS.BankApp.Core.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,18 +34,13 @@ namespace CQRS.BankApp.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //services.AddAutofac();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt => {
                     opt.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        ValidateLifetime = false,
-                        ValidateIssuerSigningKey = false,
-                        ValidIssuer = "issuer",
-                        ValidAudience = "audience",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("TopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKeyTopSecretKey"))
+                        ValidIssuer = Consts.Issuer,
+                        ValidAudience = Consts.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Consts.JWTKEY))
                     };
                 });
         }

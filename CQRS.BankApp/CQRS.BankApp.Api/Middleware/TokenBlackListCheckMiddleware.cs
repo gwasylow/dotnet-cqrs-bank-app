@@ -1,4 +1,5 @@
-﻿using CQRS.BankApp.Persistance.Entities;
+﻿using CQRS.BankApp.Core.Utils;
+using CQRS.BankApp.Persistance.Entities;
 using CQRS.BankApp.Persistance.Repositories;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
@@ -17,15 +18,17 @@ namespace CQRS.BankApp.Api.Middleware
         }
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            //TODO: check token
-            //if (_invalidKeysRepository.GetAll().FirstOrDefault(x => x.Key == context.Request.Headers["token"].ToString()) != null)
-            //{
+            var tokenFromRequest = context.Request.Headers[Consts.Authorization].ToString();
+            var isTokenBlacklisted = _invalidKeysRepository.GetAll().Any(x => tokenFromRequest.Contains(x.Key));
+            
+            if(!isTokenBlacklisted)
+            {
                 await next(context);
-            //}
-            //else
-            //{
-            //    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            //}
+            }
+            else
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            }
         }
     }
 }

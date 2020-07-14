@@ -18,10 +18,12 @@ namespace CQRS.BankApp.Api.Controllers
         {
             _queryBus = queryBus;
         }
+
         [HttpPost("GetUserDetails")]
-        public IActionResult GetUserDetails([FromBody] GetUserDetailsQuery user)
+        public IActionResult GetUserDetails(GetUserDetailsQuery user)
         {
-            return Ok(_queryBus.Send<GetUserDetailsQuery,UserDetailsModel>(user));
+            var userDetailsQuery = _queryBus.Send<GetUserDetailsQuery, UserDetailsModel>(user);
+            return Ok(userDetailsQuery);
         }
     }
 }

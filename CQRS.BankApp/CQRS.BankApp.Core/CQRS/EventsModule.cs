@@ -29,7 +29,7 @@ namespace CQRS.BankApp.Core.CQRS
                     
                     if (reslovedType is IEnumerable<IHandleEvent>)
                     {
-                        return (IEnumerable < IHandleEvent > )reslovedType;
+                        return (IEnumerable<IHandleEvent>)reslovedType;
                     }
                     else
                     {

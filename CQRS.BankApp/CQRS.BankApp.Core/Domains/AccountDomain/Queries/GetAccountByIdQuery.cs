@@ -1,9 +1,11 @@
 ﻿using CQRS.BankApp.Core.CQRS;
+using System.ComponentModel.DataAnnotations;
 
 namespace CQRS.BankApp.Core.Domains.AccountDomain.Queries
 {
     public class GetAccountQueryById : IQuery
     {
-        public int Id { get; set; }
+        [Required]
+        public int AccountId { get; set; }
     }
 }

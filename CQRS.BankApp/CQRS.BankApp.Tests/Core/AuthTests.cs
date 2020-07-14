@@ -76,7 +76,15 @@ namespace CQRS.BankApp.Tests.Core
             var isTokenBlacklisted = _container.Resolve<GenericRepository<TblInvalidKeys>>().GetAll().Where(x=>x.Key == token.Token).Any();
 
             Assert.IsTrue(isTokenBlacklisted);
+        }
 
+        [TestMethod]
+        public void UserShouldGetUniqueTokenAfterLogin()
+        {
+            var tokenAfterFirstLogin = _container.Resolve<IHandleQuery<LoginQuery, JWTModel>>().Handle(_loginModel);
+            var tokenAfterSecondLogin = _container.Resolve<IHandleQuery<LoginQuery, JWTModel>>().Handle(_loginModel);
+
+            Assert.AreNotEqual(tokenAfterFirstLogin, tokenAfterSecondLogin);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace CQRS.BankApp.Core.Domains.AccountDomain.QueryHandlers
         }
         public TblBankAccounts Handle(GetAccountQueryById query)
         {
-            return _accounts.GetById(query.Id);
+            return _accounts.GetById(query.AccountId);
         }
     }
 }

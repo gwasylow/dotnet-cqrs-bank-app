@@ -18,9 +18,9 @@ namespace CQRS.BankApp.Core.Services
 
             var token = new JwtSecurityToken
             (
-                issuer: "issuer",
-                audience: "audience",
-                expires: DateTime.UtcNow.AddMinutes(60),
+                issuer: Consts.Issuer,
+                audience: Consts.Audience,
+                expires: Consts.TokenExpirationTime,
                 claims: new List<Claim> { new Claim(ClaimTypes.Role, Consts.UserRole) },
                 signingCredentials: credentials
             );

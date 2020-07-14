@@ -8,7 +8,7 @@ namespace CQRS.BankApp.Persistance.Repositories
     }
     public interface IGenericRepository<TEntity> : IGenericRepository where TEntity : class, IMockEntity
     {
-        void Create(TEntity entity);
+        void Create(TEntity entity, bool isUpdate = false);
         IEnumerable<TEntity> GetAll();
         TEntity GetById(int id);
         void Update(TEntity entity);

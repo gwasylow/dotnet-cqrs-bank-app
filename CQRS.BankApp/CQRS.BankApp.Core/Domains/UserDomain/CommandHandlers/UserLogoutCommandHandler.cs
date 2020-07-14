@@ -23,8 +23,7 @@ namespace CQRS.BankApp.Core.Domains.UserDomain.CommandHandlers
             var invalidKey = new TblInvalidKeys
             {
                 Key = command.Key,
-                UserId = command.UserId,
-                Id = _invalidKeysRepository.GetAll().Count() + 1
+                UserId = command.UserId
             };
 
             _invalidKeysRepository.Create(invalidKey);
