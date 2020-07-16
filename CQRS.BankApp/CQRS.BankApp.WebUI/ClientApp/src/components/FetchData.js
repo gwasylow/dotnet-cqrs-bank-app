@@ -10,6 +10,7 @@ export class FetchData extends Component {
 
   componentDidMount() {
     this.populateWeatherData();
+    this.loginUser();
   }
 
   static renderForecastsTable(forecasts) {
@@ -56,4 +57,12 @@ export class FetchData extends Component {
     const data = await response.json();
     this.setState({ forecasts: data, loading: false });
   }
+
+  async loginUser() {
+    const response = await fetch('https://localhost:44301/auth/isalive');
+    const data = await response.json();
+    this.setState({ forecasts: data, loading: false });
+  }
+
+
 }

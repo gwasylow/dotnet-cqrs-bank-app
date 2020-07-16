@@ -40,8 +40,8 @@ namespace CQRS.BankApp.Persistance.Repositories
         public virtual void Create(TEntity entity, bool isUpdate = false)
         {
             //Autoincrement implementation
-            if(!isUpdate)
-            entity.Id = GetAll().Count()+1;
+            if (!isUpdate)
+                entity.Id = GetAll().Count() + 1;
 
             if (typeof(TEntity) == typeof(TblNotifications))
                 (_mockContext.Notifications as List<TblNotifications>).Add(entity as TblNotifications);

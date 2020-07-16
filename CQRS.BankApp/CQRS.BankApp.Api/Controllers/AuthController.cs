@@ -9,6 +9,7 @@ namespace CQRS.BankApp.Api.Controllers
 {
     [ApiController]
     [AllowAnonymous]
+    //[Produces("application/json")]
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
